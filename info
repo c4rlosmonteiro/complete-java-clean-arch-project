@@ -1,0 +1,151 @@
+src/main/java
+└── com/example/projectname
+    ├── domain
+    │   ├── entities  // Core business objects (Plain Java Objects - POJOs)
+    │   │   └── User.java
+    │   │   └── Product.java
+    │   ├── repositories // Interfaces defining data persistence operations
+    │   │   └── UserRepository.java
+    │   │   └── ProductRepository.java
+    │   └── usecases   // Business logic orchestrators (interactors)
+    │       ├── CreateUserUseCase.java
+    │       ├── GetProductUseCase.java
+    │       └── ports // Interfaces for interacting with use cases
+    │           ├── input // Input ports (what use cases expect)
+    │           │   └── CreateUserInputPort.java
+    │           │   └── GetProductInputPort.java
+    │           └── output // Output ports (what use cases return/notify)
+    │               └── CreateUserOutputPort.java
+    │               └── ProductOutputPort.java
+    ├── application // Adapters for the domain layer
+    │   ├── services // Implementations of domain use case input ports
+    │   │   └── UserService.java // Implements CreateUserInputPort
+    │   │   └── ProductService.java // Implements GetProductInputPort
+    │   └── presenters // Implementations of domain use case output ports (for API responses)
+    │       └── UserPresenter.java // Implements CreateUserOutputPort
+    │       └── ProductPresenter.java // Implements ProductOutputPort
+    ├── infrastructure // Frameworks and drivers (Spring, database, external APIs)
+    │   ├── persistence // Database implementations of domain repositories
+    │   │   ├── jpa // Spring Data JPA implementations
+    │   │   │   └── JpaUserRepository.java // Implements domain.repositories.UserRepository
+    │   │   │   └── JpaProductRepository.java
+    │   │   └── entities // JPA entities (might mirror domain entities or be separate)
+    │   │       └── UserEntity.java
+    │   │       └── ProductEntity.java
+    │   ├── web // Spring MVC controllers and DTOs
+    │   │   ├── controllers
+    │   │   │   └── UserController.java
+    │   │   │   └── ProductController.java
+    │   │   └── dtos
+    │   │       └── UserRequestDTO.java
+    │   │       └── ProductResponseDTO.java
+    │   └── external // Integrations with external services
+    │       └── ThirdPartyApiClient.java
+    └── config // Spring configuration classes
+        └── AppConfig.java
+
+
+______________________________________________________
+
+Sure, here's an example of a project structure using Clean Architecture for a Java Spring API project:
+
+├── src
+│   ├── main
+│   │   ├── java
+│   │   │   ├── com
+│   │   │   │   ├── example
+│   │   │   │   │   ├── application
+│   │   │   │   │   │   ├── service
+│   │   │   │   │   │   │   ├── UserService.java
+│   │   │   │   │   │   │   └── OrderService.java
+│   │   │   │   │   ├── domain
+│   │   │   │   │   │   ├── model
+│   │   │   │   │   │   │   ├── User.java
+│   │   │   │   │   │   │   ├── Order.java
+│   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   ├── UserRepository.java
+│   │   │   │   │   │   │   ├── OrderRepository.java
+│   │   │   │   │   ├── infrastructure
+│   │   │   │   │   │   ├── repository
+│   │   │   │   │   │   │   ├── JpaUserRepository.java
+│   │   │   │   │   │   │   ├── JpaOrderRepository.java
+│   │   │   │   │   │   ├── configuration
+│   │   │   │   │   │   │   ├── DatabaseConfig.java
+│   │   │   │   │   ├── web
+│   │   │   │   │   │   ├── controller
+│   │   │   │   │   │   │   ├── UserController.java
+│   │   │   │   │   │   │   ├── OrderController.java
+│   │   │   │   │   │   ├── dto
+│   │   │   │   │   │   │   ├── UserDto.java
+│   │   │   │   │   │   │   ├── OrderDto.java
+│   │   ├── resources
+│   │   │   ├── application.properties
+│   │   │   ├── data.sql
+│   │   │   ├── schema.sql
+
+├── build.gradle
+├── settings.gradle
+└── README.md
+Explanation of the Structure:
+Application Layer (application/service):
+
+Contains the business logic and services.
+Example: UserService.java, OrderService.java.
+Domain Layer (domain/model, domain/repository):
+
+Contains the core entities and repository interfaces.
+Example: User.java, Order.java, UserRepository.java, OrderRepository.java.
+Infrastructure Layer (infrastructure/repository, infrastructure/configuration):
+
+Contains the implementation of the repository interfaces and other infrastructure-related configurations.
+Example: JpaUserRepository.java, JpaOrderRepository.java, DatabaseConfig.java.
+Web Layer (web/controller, web/dto):
+
+Contains the REST controllers and Data Transfer Objects (DTOs).
+Example: UserController.java, OrderController.java, UserDto.java, OrderDto.java.
+Resources (resources):
+
+Contains configuration files and SQL scripts.
+Example: application.properties, data.sql, schema.sql.
+Test (test/java):
+
+Contains unit tests for the application, domain, infrastructure, and web layers.
+Example: UserServiceTest.java, OrderServiceTest.java, JpaUserRepositoryTest.java, UserControllerTest.java.
+This structure follows the principles of Clean Architecture by separating concerns into different layers, making the application easier to maintain and test.
+
+______________________________________________________
+
+src/
+ └── main/
+     ├── java/
+     │    └── com.example.myapp/
+     │         ├── application/           # Application layer (use cases)
+     │         │    ├── usecase/
+     │         │    │    └── GeneratePaymentUrlUseCase.java
+     │         │    └── service/
+     │         │         └── PaymentService.java
+     │         │
+     │         ├── domain/                # Domain layer (entities, core rules)
+     │         │    ├── model/
+     │         │    │    └── Invoice.java
+     │         │    │    └── User.java
+     │         │    └── repository/
+     │         │         └── InvoiceRepository.java  # Domain contract
+     │         │
+     │         ├── infrastructure/        # Infra layer (implementations, DB, external APIs)
+     │         │    ├── persistence/
+     │         │    │    └── JpaInvoiceRepository.java
+     │         │    ├── client/
+     │         │    │    └── PaymentProviderClient.java
+     │         │    └── config/
+     │         │         └── BeanConfig.java
+     │         │
+     │         └── interface/             # Interface layer (controllers, REST API)
+     │              ├── controller/
+     │              │    └── PaymentController.java
+     │              └── dto/
+     │                   ├── PaymentRequestDto.java
+     │                   └── PaymentResponseDto.java
+     │
+     └── resources/
+          └── application.yml
